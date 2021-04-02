@@ -42,7 +42,7 @@ h2{
     /* font-size: 1.1rem; */
 /* }  */
 button{
-    margin-top: 15px;
+    margin-top: 20px;
     font-family: inherit;
     width: 100%;
     border: none;
@@ -71,5 +71,5 @@ input:focus{
     outline: none;
 }
  #score{
-    padding: 29px
+    padding: 30px
 } 
