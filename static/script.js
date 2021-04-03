@@ -1,33 +1,61 @@
-data=[
-    {
-      id: 1,
-      q: "What is the command to see the kubernetes workload?",
-      ans: "kubectl get pods",
-    },
-    {
-      id: 2,
-      q: "What is the command to kubernetes virtual machines",
-      ans: "kubectl get nodes",
-    },
-  ];
+let score=0
+let currentQuestion = 0
+let dataLenght
+my_questions=[]
+quizData=[]
+dwane=["a cool guy"]
+fetch('https://quiz-ocuzv6yfua-uc.a.run.app/v2')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach( q => {
+            my_questions.push({ "question": q.question, "answer": q.answer  })
+        }),
+        dataLenght=my_questions.length,
+        document.getElementById("question").innerText = my_questions[0].question
+    })
+    // .then(
+    //     document.getElementById('userAnswer').value="",
+    //     document.getElementById("question").innerText = my_questions[currentQuestion].question
+    // )
 
-score=0
-currentQuestion = 0
-dataLenght=data.length
-
-loadQuiz()
-function loadQuiz(){
-    document.getElementById('userAnswer').value=""
-    document.getElementById("question").innerText = data[currentQuestion].q
+async function getData(){
+    const URL='https://quiz-ocuzv6yfua-uc.a.run.app/v2'
+    // const res = await fetch(URL)
+    //console.log(res)
+    // const data = await res.json()
+    // console.log(data)
+    fetch(URL)
+    .then(response => response.json())
+    .then((questions) =>  
+        questions.forEach( q => {
+        quizData.push({ "question": q.question, "answer": q.answer  })
+        }),
+        console.log(quizData)
+    );
 }
+// console.log(questions[0].question)
+console.log(my_questions)
+data = getData()
 
+
+// loadQuiz()
+
+
+
+// console.log(data)
+function loadQuiz(){
+    
+    document.getElementById('userAnswer').value=""
+    document.getElementById("question").innerText = my_questions[currentQuestion].question
+}
+// let dataLenght=my_questions.length
 
 const button = document.getElementById('submit')
 
 button.addEventListener('click', ()=>{
     userInput = document.getElementById('userAnswer')
 
-    if(userInput.value == data[currentQuestion].ans){
+    if(userInput.value == my_questions[currentQuestion].answer){
         console.log('correct')
         document.getElementById('userAnswer').innerText=""
         currentQuestion++
@@ -55,7 +83,7 @@ document.addEventListener('keypress', (e)=>{
     if (e.key === 'Enter') {
     userInput = document.getElementById('userAnswer')
 
-    if(userInput.value == data[currentQuestion].ans){
+    if(userInput.value == my_questions[currentQuestion].answer){
         console.log('correct')
         document.getElementById('userAnswer').innerText=""
         currentQuestion++
